@@ -8,3 +8,4 @@
 
 # Environment variables
 .env
+/backend/.env

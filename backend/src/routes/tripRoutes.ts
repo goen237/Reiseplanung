@@ -12,6 +12,4 @@ router.delete("/:id", tripController.deleteTrip);
 router.post("/:id/destinations", tripController.addDestinationToTrip);
 router.delete("/:id/destinations/:destinationId", tripController.removeDestinationFromTrip);
 
-
-
 export default router;

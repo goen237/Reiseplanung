@@ -63,6 +63,19 @@ describe("Destinations API", () => {
     destinationId = res.body.id;
   });
 
+  it("should update a destination", async () => {
+    const res = await request(app).put(`/api/destinations/${destinationId}`).send({
+      name: "Rom - Aktualisiert",
+      description: "Aktualisierte Beschreibung",
+      activities: ["Kolosseum", "Vatikanische Museen"],
+      photos: ["http://image.com/rom-updated.jpg"],
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.name).toBe("Rom - Aktualisiert");
+    expect(res.body.description).toBe("Aktualisierte Beschreibung");
+  });
+
+
   it("should assign destination to trip", async () => {
     const res = await request(app)
       .post(`/api/trips/${tripId}/destinations`)

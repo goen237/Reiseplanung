@@ -38,3 +38,9 @@ export const getTripsByDestination = async (req: Request, res: Response): Promis
     const trips = await destinationService.getTripsByDestination(destinationId);
     res.json(trips);
   };
+
+  export const getDestinationsByTripId = async (req: Request, res: Response): Promise<void> => {
+    const tripId = parseInt(req.params.tripId);
+    const destinations = await destinationService.getDestinationsByTripId(tripId);
+    res.json(destinations);
+  }

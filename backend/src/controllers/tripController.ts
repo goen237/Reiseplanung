@@ -74,6 +74,6 @@ export const removeDestinationFromTrip = async (req: Request, res: Response): Pr
 // };
 
 export const searchTrips = async (req: Request, res: Response) => {
-  const results = await tripService.searchTrips(req.query.name as string, req.query.datum as string);
+  const results = await tripService.searchTrips(req.query.name as string, req.query.date as string);
   res.json(results);
 }

@@ -7,7 +7,19 @@ export const getAllDestinations = async (_req: Request, res: Response) => {
 };
 
 export const getDestinationById = async (req: Request, res: Response): Promise<void> => {
-  const id = parseInt(req.params.id);
+  const idParam = req.params.id;
+  if (!idParam) {
+    res.status(400).json({ error: "Missing destination ID" });
+    return;
+  }
+  console.log("eingelesene ID", idParam)
+
+  const id = parseInt(idParam);
+  if(isNaN(id)) {
+    res.status(400).json({ error: "Invalid destination ID" });
+    return;
+  }
+
   const destination = await destinationService.getDestinationById(id);
   if (!destination) {
     res.status(404).json({ error: "Destination not found" });
@@ -20,6 +32,11 @@ export const createDestination = async (req: Request, res: Response) => {
   const destination = await destinationService.createDestination(req.body);
   res.status(201).json(destination);
 };
+
+export const searchDestinations = async (req: Request, res: Response) => {
+  const destinations = await destinationService.searchDestinations(req.query.name as string);
+  res.json(destinations);
+}
 
 export const updateDestination = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);

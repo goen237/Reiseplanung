@@ -13,7 +13,7 @@ const tripSchema = z.object({
     message: "Invalid endDate format",
   }),
   image: z.string().optional(),
-  participant: z.array(z.string()),
+  participants: z.array(z.string()),
 });
 
 export const getAllTrips = () => {
@@ -60,12 +60,15 @@ export const deleteTrip = (id: number) => {
   });
 };
 
-export const addDestinationToTrip = (tripId: number, destinationId: number) => {
-  return prisma.tripDestination.create({
-    data: {
-      tripId,
-      destinationId,
-    },
+export const addDestinationsToTrip = async (tripId: number, destinationIds: number[]) => {
+  const data = destinationIds.map((destinationId) => ({
+    tripId,
+    destinationId,
+  }));
+
+  return prisma.tripDestination.createMany({
+    data,
+    skipDuplicates: true, // Avoid errors if some destinations are already linked
   });
 };
 

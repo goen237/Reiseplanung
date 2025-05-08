@@ -21,7 +21,7 @@ describe("Trips API", () => {
       description: "Beschreibung",
       startDate: "2025-05-01T00:00:00.000Z",
       endDate: "2025-05-10T00:00:00.000Z",
-      participant: ["Anna", "Tom"],
+      participants: ["Anna", "Tom"],
     });
     expect(res.statusCode).toBe(201);
     expect(res.body.name).toBe("Testreise");
@@ -54,8 +54,6 @@ describe("Destinations API", () => {
     const res = await request(app).post("/api/destinations").send({
       name: "Rom",
       description: "Stadt der Antike",
-      startDate: "2025-05-02T00:00:00.000Z",
-      endDate: "2025-05-04T00:00:00.000Z",
       activities: ["Kolosseum", "Vatikane"],
       photos: ["http://image.com/rom.jpg"],
     });
@@ -76,10 +74,10 @@ describe("Destinations API", () => {
   });
 
 
-  it("should assign destination to trip", async () => {
+  it("should assign destinations to trip", async () => {
     const res = await request(app)
       .post(`/api/trips/${tripId}/destinations`)
-      .send({ destinationId });
+      .send({ destinationIds: [destinationId] });
     expect(res.statusCode).toBe(201);
   });
 

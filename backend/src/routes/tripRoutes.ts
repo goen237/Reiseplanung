@@ -9,7 +9,7 @@ router.get("/:id", tripController.getTripById);
 router.post("/", tripController.createTrip);
 router.put("/:id", tripController.updateTrip);
 router.delete("/:id", tripController.deleteTrip);
-router.post("/:id/destinations", tripController.addDestinationToTrip);
+router.post("/:id/destinations", tripController.addDestinationsToTrip);
 router.delete("/:id/destinations/:destinationId", tripController.removeDestinationFromTrip);
 
 export default router;

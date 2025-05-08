@@ -2,8 +2,6 @@ export interface Destination {
     id: number;
     name: string;
     description: string;
-    startDate: string;
-    endDate: string;
     activities: string[];
     photos: string[];
   }
@@ -15,6 +13,6 @@ export interface Destination {
     image?: string;
     startDate: string;
     endDate: string;
-    participant: string[];
+    participants: string[];
     destinations?: Destination[];
   }

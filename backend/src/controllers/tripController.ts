@@ -48,11 +48,17 @@ export const deleteTrip = async (req: Request, res: Response) => {
   res.status(204).send();
 };
 
-export const addDestinationToTrip = async (req: Request, res: Response): Promise<void> => {
+export const addDestinationsToTrip = async (req: Request, res: Response): Promise<void> => {
   const tripId = parseInt(req.params.id);
-  const { destinationId } = req.body;
-  const result = await tripService.addDestinationToTrip(tripId, destinationId);
-  res.status(201).json(result);
+  const { destinationIds } = req.body;
+
+  if (!Array.isArray(destinationIds) || destinationIds.some(isNaN)) {
+    res.status(400).json({ error: "Invalid destination IDs" });
+    return;
+  }
+
+  const results = await tripService.addDestinationsToTrip(tripId, destinationIds);
+  res.status(201).json(results);
 };
 
 export const removeDestinationFromTrip = async (req: Request, res: Response): Promise<void> => {
@@ -61,17 +67,6 @@ export const removeDestinationFromTrip = async (req: Request, res: Response): Pr
   await tripService.removeDestinationFromTrip(tripId, destinationId);
   res.status(204).send();
 };
-
-// export const searchTrips = async (req: Request, res: Response): Promise<void> => {
-//   const { name, date } = req.query;
-
-//   const results = await tripService.searchTrips(
-//     typeof name === "string" ? name : undefined,
-//     typeof date === "string" ? new Date(date) : undefined
-//   );
-
-//   res.json(results);
-// };
 
 export const searchTrips = async (req: Request, res: Response) => {
   const results = await tripService.searchTrips(req.query.name as string, req.query.date as string);

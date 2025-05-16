@@ -3,33 +3,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../api/client";
 import DestinationForm from "../../components/DestinationFormComponent/DestinationForm";
 import { Destination } from "../../types/models";
+import "./AddDestinationPage.css";
 
 export default function AddDestinationPage() {
-  const { id, destinationId } = useParams<{ id: string; destinationId?: string }>();
+  const { id, destinationId } = useParams<{ id?: string; destinationId?: string }>();
   const navigate = useNavigate();
 
   const isEdit = Boolean(destinationId);
+  const isTrip = Boolean(id);
 
   const [form, setForm] = useState<Partial<Destination>>({
     name: "",
     description: "",
-    // startDate: "",
-    // endDate: "",
     activities: [],
     photos: [],
   });
 
   const [allDestinations, setAllDestinations] = useState<Destination[]>([]);
   const [selectedDestinationIds, setSelectedDestinationIds] = useState<number[]>([]);
-  const [includeNewDestination, setIncludeNewDestination] = useState(false); // Kontrollkästchen-Status
+  const [includeNewDestination, setIncludeNewDestination] = useState(false);
 
   // Lade alle Reiseziele aus der Datenbank
   useEffect(() => {
-    api
-      .get<Destination[]>("/destinations")
-      .then((res) => setAllDestinations(res.data))
-      .catch((err) => console.error("Fehler beim Laden der Reiseziele:", err));
-  }, []);
+    if (isTrip) {
+      api
+        .get<Destination[]>("/destinations")
+        .then((res) => setAllDestinations(res.data))
+        .catch((err) => console.error("Fehler beim Laden der Reiseziele:", err));
+    }
+  }, [isTrip]);
 
   // Lade das aktuelle Reiseziel, wenn es bearbeitet wird
   useEffect(() => {
@@ -66,7 +68,20 @@ export default function AddDestinationPage() {
     e.preventDefault();
 
     try {
-      console.log("Formular wird gespeichert:", form);
+      if (!isTrip) {
+        // Speichere das Reiseziel direkt in die Datenbank
+        const destinationData = {
+          name: form.name,
+          description: form.description,
+          activities: form.activities?.map((a) => a.trim()).filter((a) => a !== ""),
+          photos: form.photos?.map((p) => p.trim()).filter((p) => p !== ""),
+        };
+
+        await api.post(`/destinations/`, destinationData);
+        alert("Reiseziel erfolgreich gespeichert!");
+        navigate("/destinations");
+        return;
+      }
 
       let newDestinationId: number | null = null;
 
@@ -75,8 +90,6 @@ export default function AddDestinationPage() {
         const destinationData = {
           name: form.name,
           description: form.description,
-          // startDate: form.startDate ? new Date(form.startDate).toISOString() : undefined,
-          // endDate: form.endDate ? new Date(form.endDate).toISOString() : undefined,
           activities: form.activities?.map((a) => a.trim()).filter((a) => a !== ""),
           photos: form.photos?.map((p) => p.trim()).filter((p) => p !== ""),
         };
@@ -103,33 +116,45 @@ export default function AddDestinationPage() {
 
   return (
     <div className="container">
-      <h3>{isEdit ? "Reiseziel bearbeiten" : "Neues Reiseziel anlegen"}</h3>
+      <h3>{isEdit ? "Reiseziel bearbeiten" : isTrip ? "Neues Reiseziel anlegen" : "Reiseziel speichern"}</h3>
 
       <form onSubmit={handleSubmit} className="destination-form">
-      <DestinationForm form={form} onChange={handleChange} onArrayChange={handleArrayChange} />
-        <br />
-        <h4>Alle Reiseziele</h4>
-        <div>
-          {allDestinations.map((destination) => (
-            <div key={destination.id}>
-              <input
-                type="checkbox"
-                checked={selectedDestinationIds.includes(destination.id)}
-                onChange={() => handleDestinationSelection(destination.id)}
-              />
-              {destination.name}
+        <DestinationForm form={form} onChange={handleChange} onArrayChange={handleArrayChange} />
+        {isTrip && (
+          <>
+            <br />
+            <h4>Alle verfügbaren Reiseziele</h4>
+            <div className="destination-cards">
+              {allDestinations.map((destination) => (
+                <div
+                  key={destination.id}
+                  className={`destination-card ${
+                    selectedDestinationIds.includes(destination.id) ? "selected" : ""
+                  }`}
+                  onClick={() => handleDestinationSelection(destination.id)}
+                >
+                  {destination.photos?.[0] && (
+                    <img src={destination.photos[0]} alt={destination.name} />
+                  )}
+                  <p>{destination.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
         <br />
-        <label>
-          <input
-            type="checkbox"
-            checked={includeNewDestination}
-            onChange={(e) => setIncludeNewDestination(e.target.checked)}
-          />
-          Neues Reiseziel speichern
-        </label>
+        {isTrip && (
+          <label className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={includeNewDestination}
+              onChange={(e) => setIncludeNewDestination(e.target.checked)}
+              className="checkbox-input"
+            />
+            <span className="checkbox-custom"></span>
+            Neues Reiseziel speichern
+          </label>
+        )}
         <br />
         <button type="submit">{isEdit ? "Speichern" : "Anlegen"}</button>
       </form>

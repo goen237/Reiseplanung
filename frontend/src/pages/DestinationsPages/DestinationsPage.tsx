@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../api/client";
 import { Destination } from "../../types/models";
 import DestinationCard from "../../components/TripDetailComponent/DestinationCard";
-import "./DestinationPage.css"
+import "./DestinationPage.css";
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<Destination[]>([]);

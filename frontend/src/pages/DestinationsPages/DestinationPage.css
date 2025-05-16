@@ -1,12 +1,58 @@
-.grid {
-  display: grid;
-  gap: 1.5rem;
+
+.p-6 {
+  padding: 2rem;
 }
 
-.destination-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.max-w-5xl {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
   margin-bottom: 2rem;
+  color: #333;
+}
+
+/* Button für "Neues Reiseziel hinzufügen" */
+.new-trip-button {
+  display: block;
+  margin: 0 auto 2rem auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.new-trip-button:hover {
+  background-color: #005a9e;
+}
+
+.new-trip-button:active {
+  transform: scale(0.95);
+}
+
+/* Container für die Liste der Reiseziele */
+.destination-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
   justify-content: center;
+  align-items: start;
+}
+
+/* Stil für die Karten (über DestinationCard.css hinaus) */
+.destination-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }

@@ -35,26 +35,6 @@ export default function DestinationForm({ form, onChange, onArrayChange }: Desti
           onChange={onChange}
         />
       </label>
-      {/* <label>
-        Startdatum:
-        <input
-          type="date"
-          required
-          name="startDate"
-          value={form.startDate ? form.startDate.split("T")[0] : ""}
-          onChange={onChange}
-        />
-      </label>
-      <label>
-        Enddatum:
-        <input
-          type="date"
-          required
-          name="endDate"
-          value={form.endDate ? form.endDate.split("T")[0] : ""}
-          onChange={onChange}
-        />
-      </label> */}
       <label>
         Aktivitäten (kommagetrennt):
         <input

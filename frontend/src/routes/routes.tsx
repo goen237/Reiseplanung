@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/trips/:id/destinations/new", element: <AddDestinationPage /> },
       { path: "/trips/:id/destinations/:destinationId/edit", element: <AddDestinationPage />},
       { path: "/destinations", element: <DestinationsPage /> },
+      { path: "/destinations/new", element: <AddDestinationPage /> },
       { path: "*", element: <NotFound />},
     ],
   },

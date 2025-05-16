@@ -1,33 +1,53 @@
-# 📘 FWE-SS-25-<1123807> – Backend
+# 📘 FWE-SS-25-<1123807> – Reiseplaner – Dokumentation
+
 
 ## 🧭 Projektbeschreibung
 
-Diese Anwendung dient der Planung und Organisation von Reisen. Benutzer können Reisen und Reisezielen verwalten, diese miteinander verknüpfen, durchsuchen und löschen. Die API ist ein reines Backend-System auf Basis von **Node.js, TypeScript, Express und PostgreSQL (via Prisma ORM)**.
+Diese Anwendung dient der Planung und Organisation von Reisen. Benutzer können Reisen und Reisezielen verwalten, diese miteinander verknüpfen, durchsuchen und löschen. Sie wurde in zwei Teilen entwickelt:
+
+- **Backend**: Node.js, Express, Prisma, PostgreSQL
+- **Frontend**: Vite, React, TypeScript, Tailwind CSS
+
+Sie erfüllt alle Anforderungen der FWE-Hausaufgaben 1 & 2.
 
 ## ⚙️ Tech Stack
 
-- Node.js + TypeScript
-- Express.js
-- PostgreSQL
-- Prisma ORM
-- Jest + Supertest (für automatisierte Tests)
+- Node.js: Serverseitige JavaScript-Laufzeitumgebung.
+- TypeScript: Typsicheres JavaScript für bessere Wartbarkeit.
+- Express.js: Minimalistisches Webframework für Node.js.
+- PostgreSQL: Relationale Datenbank.
+- Prisma ORM: Datenbank-ORM für TypeScript.
+- Jest + Supertest: Frameworks für automatisierte Tests.
 
 ## 📁 Projektstruktur
 
 ```
-├── src/
-│   ├── controllers/        # Routen-Logik
-│   ├── services/           # Geschäftslogik
-│   ├── routes/             # API-Routen
-│   ├── server.ts           # Einstiegspunkt
-├── prisma/
-│   ├── schema.prisma       # Datenbankmodell
-│   └── migrations/         # Migrationen
-├── tests/                  # Automatisierte Tests
-├── .env                    # Umgebungsvariablen
-├── package.json
-├── README.md
+FWE-SS-25-1123807/
+├── backend/
+│   ├── src/
+│   ├── prisma/
+│   ├── Dockerfile.backend
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── Dockerfile.frontend
+│   └── package.json
+├── docker-compose.yml
 ```
+
+---
+
+## ⚙️ Technologien
+
+- Node.js 20
+- PostgreSQL 15
+- Prisma ORM
+- React 18 mit TypeScript
+- Vite + Tailwind CSS
+- Docker & Docker Compose
+
+---
 
 ## 🚀 Setup-Anleitung
 
@@ -63,14 +83,14 @@ npm run dev
 
 ### 📍 Trips
 
-| Methode | Pfad                            | Beschreibung                      |
+| Methode| Pfad                             | Beschreibung                      |
 |--------|----------------------------------|-----------------------------------|
 | GET    | `/api/trips`                     | Alle Reisen anzeigen              |
+| GET    | `/api/trips/search?name=&date=`  | Reisen suchen (Name oder Datum)   |
 | GET    | `/api/trips/:id`                 | Einzelne Reise anzeigen           |
 | POST   | `/api/trips`                     | Neue Reise erstellen              |
 | PUT    | `/api/trips/:id`                 | Reise bearbeiten                  |
 | DELETE | `/api/trips/:id`                 | Reise löschen                     |
-| GET    | `/api/trips/search?name=&date=`  | Reisen suchen (Name oder Datum)   |
 | POST   | `/api/trips/:id/destinations`    | Reiseziel zu Reise hinzufügen     |
 | DELETE | `/api/trips/:id/destinations/:destinationId` | Reiseziel aus Reise entfernen |
 
@@ -79,17 +99,19 @@ npm run dev
 | Methode | Pfad                           |Beschreibung                             |
 |---------|--------------------------------|-----------------------------------------|
 | GET     | `/api/destinations`            | Alle Reiseziele anzeigen                |
+| GET     | `/api/destinations/search`     | Reiseziel suchen (name)                 |
 | GET     | `/api/destinations/:id`        | Einzelnes Reiseziel anzeigen            |
 | POST    | `/api/destinations`            | Neues Reiseziel erstellen               |
 | PUT     | `/api/destinations/:id`        | Reiseziel bearbeiten                    |
 | DELETE  | `/api/destinations/:id`        | Reiseziel löschen                       |
 | GET     | `/api/destinations/:id/trips`  | Reisen zu einem Reiseziel anzeigen      |
+| GET     | `/api/destinations/:id/trips/:tripId`  | Reiseziel zu einer reise anzeigen      |
 
 ## 🧪 Testen
 
 1. **Tests ausführen**
 ```bash
-npx jest
+npm run test
 ```
 
 2. Alternativ: API mit Postman oder cURL testen

@@ -21,7 +21,7 @@ export default function DestinationList({
       <h2 className="text-xl font-semibold">Reiseziele</h2>
       <button
         onClick={onAdd}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+        style={{ marginBottom: "1rem" }}
       >
         Neues Reiseziel hinzufügen
       </button>

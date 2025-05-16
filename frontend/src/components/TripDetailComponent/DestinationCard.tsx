@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Destination } from "../../types/models";
+import "./DestinationCard.css"; // Import der CSS-Datei
 
 interface DestinationCardProps {
   destination: Destination;
   tripId: string;
   onDelete: (id: number) => void;
 }
-
-import "./DestinationCard.css"; // Import der CSS-Datei
 
 export default function DestinationCard({
   destination,
@@ -19,7 +18,7 @@ export default function DestinationCard({
   return (
     <div className="destination-card">
       <h2>{destination.name}</h2>
-      <p className="text-gray-700 mb-4">{destination.description}</p>
+      <p>{destination.description || "Keine Beschreibung verfügbar."}</p>
 
       {destination.photos?.length > 0 && (
         <div className="destination-photos">
@@ -34,9 +33,9 @@ export default function DestinationCard({
       )}
 
       {destination.activities?.length > 0 && (
-        <div className="mb-4">
-          <h4 className="font-semibold mb-2">Aktivitäten:</h4>
-          <ul className="list-disc pl-5 text-gray-700">
+        <div className="destination-activities">
+          <h4>Aktivitäten:</h4>
+          <ul>
             {destination.activities.map((activity, idx) => (
               <li key={idx}>{activity}</li>
             ))}
@@ -45,16 +44,10 @@ export default function DestinationCard({
       )}
 
       <div className="destination-actions">
-        <button
-          onClick={() => navigate(`/trips/${tripId}/destinations/${destination.id}/edit`)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
+        <button onClick={() => navigate(`/trips/${tripId}/destinations/${destination.id}/edit`)}>
           Ziel bearbeiten
         </button>
-        <button
-          onClick={() => onDelete(destination.id)}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-        >
+        <button onClick={() => onDelete(destination.id)}>
           Löschen
         </button>
       </div>

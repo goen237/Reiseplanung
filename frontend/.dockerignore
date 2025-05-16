@@ -1,0 +1,18 @@
+# Node.js spezifische Dateien
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build- und Cache-Dateien
+dist
+build
+.cache
+
+
+# IDE-spezifische Dateien
+.vscode
+.idea
+
+# Betriebssystem-spezifische Dateien
+.DS_Store
+Thumbs.db

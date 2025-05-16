@@ -1,20 +1,23 @@
-# Use an official Node.js image as the base image
-FROM node:18-alpine
+# Build stage
+FROM node:20 AS dev
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json package-lock.json ./
+# Copy only the package.json and lock file to leverage Docker caching
+COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN npm install
+# Install pnpm and dependencies
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
-# Copy the rest of the application code to the working directory
+# Copy the rest of the application code
 COPY . .
 
-# Expose the port Vite will run on
+# Build the application
+RUN pnpm run build
+
+# Expose the default Nginx port
 EXPOSE 5173
 
-# Start the Vite development server
-CMD ["npm", "run", "dev"]
+# Start Nginx
+CMD ["pnpm", "run", "dev", "--host"]

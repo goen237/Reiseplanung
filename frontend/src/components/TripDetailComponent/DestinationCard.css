@@ -1,45 +1,105 @@
 .destination-card {
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 16px;
   width: 300px;
   background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 .destination-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .destination-card h2 {
   font-size: 1.5rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #333;
   text-align: center;
 }
 
 .destination-card p {
   font-size: 1rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #555;
+  text-align: center;
 }
 
-.destination-card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-
-.destination-card {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 16px;
-}
-
-.destination-card .destination-actions {
-  display: flex;
-  justify-content: center;
+.destination-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.destination-photos img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.destination-activities {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.destination-activities h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.destination-activities ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.destination-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.destination-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.destination-actions button:active {
+  transform: scale(0.95);
+}
+
+.destination-actions button:first-child {
+  background-color: #0078d4;
+  color: white;
+}
+
+.destination-actions button:first-child:hover {
+  background-color: #005a9e;
+}
+
+.destination-actions button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
+
+.destination-actions button:last-child:hover {
+  background-color: #c82333;
 }

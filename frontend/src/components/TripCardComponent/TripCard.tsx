@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Trip } from "../../types/models";
-import "./TripCard.css"; // Import der CSS-Datei
+import "./TripCard.css"; // Import der neuen CSS-Datei
 
 interface TripCardProps {
   trip: Trip;
@@ -20,15 +20,20 @@ export default function TripCard({ trip, onDelete }: TripCardProps) {
           alt={trip.name}
         />
       )}
-      <p><u>Teilnehmer</u>: {trip.participants.join(", ")}</p>
       <p className="trip-dates">
-        <strong>{new Date(trip.startDate).toISOString().split("T")[0]}</strong> bis{" "}
-        <strong>{new Date(trip.endDate).toISOString().split("T")[0]}</strong>
+        {new Date(trip.startDate).toISOString().split("T")[0]} bis{" "}
+        {new Date(trip.endDate).toISOString().split("T")[0]}
       </p>
       <div className="trip-actions">
-        <button onClick={() => navigate(`/trips/${trip.id}`)}>Details ansehen</button>
-        <button onClick={() => navigate(`/trips/${trip.id}/edit`)}>Bearbeiten</button>
-        <button onClick={() => onDelete(trip.id)}>Löschen</button>
+        <button className="details" onClick={() => navigate(`/trips/${trip.id}`)}>
+          Details ansehen
+        </button>
+        <button className="edit" onClick={() => navigate(`/trips/${trip.id}/edit`)}>
+          Bearbeiten
+        </button>
+        <button className="delete" onClick={() => onDelete(trip.id)}>
+          Löschen
+        </button>
       </div>
     </div>
   );

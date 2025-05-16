@@ -1,81 +1,95 @@
 .trip-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: none;
+  border-radius: 12px;
   padding: 16px;
-  width: 300px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 320px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .trip-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .trip-card h2 {
   font-size: 1.5rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #333;
   text-align: center;
 }
 
 .trip-card p {
   font-size: 1rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #555;
+  text-align: center;
 }
 
 .trip-card img {
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .trip-card .trip-dates {
   font-size: 0.9rem;
   color: #777;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .trip-card .trip-actions {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
 }
 
 .trip-card button {
-  padding: 8px 12px;
+  padding: 10px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.trip-card button:nth-child(1) {
+.trip-card button:active {
+  transform: scale(0.95);
+}
+
+.trip-card button.details {
   background-color: #0078d4;
   color: white;
 }
 
-.trip-card button:nth-child(1):hover {
+.trip-card button.details:hover {
   background-color: #005a9e;
 }
 
-.trip-card button:nth-child(2) {
+.trip-card button.edit {
   background-color: #ffc107;
   color: white;
 }
 
-.trip-card button:nth-child(2):hover {
+.trip-card button.edit:hover {
   background-color: #e0a800;
 }
 
-.trip-card button:nth-child(3) {
+.trip-card button.delete {
   background-color: #dc3545;
   color: white;
 }
 
-.trip-card button:nth-child(3):hover {
+.trip-card button.delete:hover {
   background-color: #c82333;
 }

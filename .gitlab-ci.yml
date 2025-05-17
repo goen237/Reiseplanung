@@ -24,6 +24,7 @@ install_backend:
   image: node:latest
   script:
     - cd backend
+    - npm install -g pnpm
     - pnpm install
 
 install_frontend:
@@ -31,7 +32,9 @@ install_frontend:
   image: node:latest
   script:
     - cd frontend
-    - npm install
+    - npm install -g pnpm
+    - pnpm install
+
 
 test_backend:
   stage: test

@@ -48,17 +48,5 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
-  "type": "commonjs",
-  "jest": {
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "./reports/junit",
-          "outputName": "js-test-results.xml"
-        }
-      ]
-    ]
-  }
+  "type": "commonjs"
 }

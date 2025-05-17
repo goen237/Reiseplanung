@@ -43,9 +43,3 @@ test_backend:
     - npx prisma generate
     - npx prisma migrate dev --name init
     - npm run test
-  artifacts:
-    when: always
-    reports:
-      junit: backend/reports/junit/js-test-results.xml
-    paths:
-      - backend/reports/junit/

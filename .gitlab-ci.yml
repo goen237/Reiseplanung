@@ -1,0 +1,43 @@
+stages:
+  - install
+  - test
+  - build
+
+variables:
+  POSTGRES_USER: $POSTGRES_USER
+  POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+  POSTGRES_DB: $POSTGRES_DB
+  DATABASE_URL: $DATABASE_URL
+  NODE_ENV: test
+
+services:
+  - name : postgres:latest
+    alias: db
+
+caches:
+  paths:
+    - backend/node_modules/
+    - frontend/node_modules/
+
+install_backend:
+  stage: install
+  image: node:latest
+  script:
+    - cd backend
+    - npm install
+
+install_frontend:
+  stage: install
+  image: node:latest
+  script:
+    - cd frontend
+    - npm install
+
+test_backend:
+  stage: test
+  image: node:latest
+  script:
+    - cd backend
+    - npx prisma generate
+    - npx prisma migrate dev --name init
+    - npm run test

@@ -79,13 +79,19 @@ export default function TripListPage() {
 
       {/* Liste der Reisen */}
       <div className="trip-list">
-        {trips.map((trip) => (
-          <TripCard
-            key={trip.id}
-            trip={trip}
-            onDelete={handleDelete}
-          />
-        ))}
+        {trips.length === 0 ? (
+          <div className="no-trips-message">
+            Keine Reisen gefunden.
+          </div>
+        ) : (
+          trips.map((trip) => (
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              onDelete={handleDelete}
+            />
+          ))
+        )}
       </div>
     </div>
   );

@@ -12,12 +12,17 @@ Sie erfüllt alle Anforderungen der FWE-Hausaufgaben 1 & 2.
 
 ## ⚙️ Tech Stack
 
-- Node.js: Serverseitige JavaScript-Laufzeitumgebung.
-- TypeScript: Typsicheres JavaScript für bessere Wartbarkeit.
-- Express.js: Minimalistisches Webframework für Node.js.
-- PostgreSQL: Relationale Datenbank.
-- Prisma ORM: Datenbank-ORM für TypeScript.
-- Jest + Supertest: Frameworks für automatisierte Tests.
+- **Backend**:
+  - Node.js 20
+  - Express.js
+  - Prisma ORM
+  - PostgreSQL 15
+- **Frontend**:
+  - React 18 mit TypeScript
+  - Vite + Tailwind CSS
+- **Tools**:
+  - Docker & Docker Compose
+  - Jest + Supertest für Tests
 
 ## 📁 Projektstruktur
 
@@ -35,18 +40,6 @@ FWE-SS-25-1123807/
 │   └── package.json
 ├── docker-compose.yml
 ```
-
----
-
-## ⚙️ Technologien
-
-- Node.js 20
-- PostgreSQL 15
-- Prisma ORM
-- React 18 mit TypeScript
-- Vite + Tailwind CSS
-- Docker & Docker Compose
-
 ---
 
 ## 🚀 Setup-Anleitung
@@ -54,30 +47,34 @@ FWE-SS-25-1123807/
 1. **Repository klonen**
 ```bash
 git clone <repository-url>
-cd <FWE-SS-25>
+cd FWE-SS-25-1123807
 ```
 
-2. **Abhängigkeiten installieren**
+#### **2.1. Docker-Compose starten**
 ```bash
-npm install
+docker-compose up --build
 ```
 
-3. **.env Datei erstellen**
-```env
-DATABASE_URL="postgresql://user:password@localhost:5432/deine_db"
-PORT=3000
-```
+- **Frontend**: Erreichbar unter `http://localhost:5173`
+- **Backend**: Erreichbar unter `http://localhost:3000`
+- **pgAdmin**: Erreichbar unter `http://localhost:8080`
 
-4. **Datenbank vorbereiten**
+#### **2.2. pgAdmin konfigurieren**
+1. Melde dich bei pgAdmin an:
+   - **E-Mail**: `admin@admin.com`
+   - **Passwort**: `admin123`
+2. Füge einen neuen Server hinzu:
+   - **Host**: `db`
+   - **Port**: `5432`
+   - **Benutzername**: `user` (aus `.env`)
+   - **Passwort**: `password` (aus `.env`)
+
+#### **2.3. Prisma-Migrationen ausführen**
 ```bash
-npx prisma migrate dev --name init
-npx prisma generate
+docker exec -it <backend-container-name> npx prisma migrate dev --name init
 ```
 
-5. **Server starten**
-```bash
-npm run dev
-```
+---
 
 ## 🔌 API-Routen
 
@@ -107,28 +104,85 @@ npm run dev
 | GET     | `/api/destinations/:id/trips`  | Reisen zu einem Reiseziel anzeigen      |
 | GET     | `/api/destinations/:id/trips/:tripId`  | Reiseziel zu einer reise anzeigen      |
 
+---
+
 ## 🧪 Testen
 
-1. **Tests ausführen**
+### **1. Tests ausführen**
 ```bash
-npm run test
+docker exec -it <backend-container-name> npm run test
 ```
 
-2. Alternativ: API mit Postman oder cURL testen
-   Beispiel:
+### **2. Alternativ: API mit Postman oder cURL testen**
+Beispiel:
 ```bash
 curl http://localhost:3000/api/trips
 ```
 
-## 🎯 Abdeckung aller Anforderungen
+---
 
-- [x] CRUD für Reisen & Reiseziele
-- [x] Verknüpfung von Reisezielen mit Reisen (n:m)
-- [x] Suche nach Reisen über Name und Datum
-- [x] Ausgabe aller Reisen, die ein bestimmtes Reiseziel beinhalten
-- [x] Automatisierte Tests
-- [x] Strukturierte README.md
-- [x] Einheitlicher, kommentierter Code (TypeScript)
 
-## 🚀 Optional: Docker Setup (nicht erforderlich)
-<Optionaler Hinweis, falls du Docker nutzt>
+---
+
+## 🚀 Optional: Lokale Entwicklung ohne Docker
+
+### **1. Backend starten**
+1. **Wechsle ins Backend-Verzeichnis:**
+   ```bash
+   cd backend
+   ```
+2. **Abhängigkeiten installieren:**
+   ```bash
+   pnpm install
+   ```
+3. **Prisma-Migrationen ausführen:**
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+4. **Server starten:**
+   ```bash
+   pnpm run dev
+   ```
+
+### **2. Frontend starten**
+1. **Wechsle ins Frontend-Verzeichnis:**
+   ```bash
+   cd frontend
+   ```
+2. **Abhängigkeiten installieren:**
+   ```bash
+   pnpm install
+   ```
+3. **Vite-Entwicklungsserver starten:**
+   ```bash
+   pnpm run dev
+   ```
+
+---
+
+## 📦 Docker-Compose Übersicht
+
+### **Dienste**
+- **db**: PostgreSQL-Datenbank
+- **backend**: Node.js-Backend mit Prisma
+- **frontend**: React-Frontend mit Vite
+- **pgadmin**: Verwaltungstool für PostgreSQL
+
+### **Ports**
+| Dienst     | Port       | Beschreibung                     |
+|------------|------------|-----------------------------------|
+| Frontend   | `5173`     | Vite-Entwicklungsserver          |
+| Backend    | `3000`     | Express-API                      |
+| PostgreSQL | `5432`     | Datenbank                        |
+| pgAdmin    | `8080`     | Verwaltung der PostgreSQL-Datenbank |
+
+---
+
+## 📘 Hinweise
+
+- **Docker-Volumes**:
+  - `postgres_data`: Speichert die Datenbankdaten persistent.
+  - `pgadmin_data`: Speichert die Konfiguration von pgAdmin.
+- **Umgebungsvariablen**:
+  - Stelle sicher, dass die `.env`-Dateien korrekt konfiguriert sind.
+

@@ -11,10 +11,10 @@ variables:
   NODE_ENV: test
 
 services:
-  - name : postgres:latest
+  - name: postgres:latest
     alias: db
 
-caches:
+cache:
   paths:
     - backend/node_modules/
     - frontend/node_modules/

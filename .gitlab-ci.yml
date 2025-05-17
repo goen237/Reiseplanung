@@ -24,14 +24,16 @@ install_backend:
   image: node:latest
   script:
     - cd backend
-    - npm install
+    - npm install -g pnpm
+    - pnpm install --no-frozen-lockfile
 
 install_frontend:
   stage: install
   image: node:latest
   script:
     - cd frontend
-    - npm install
+    - npm install -g pnpm
+    - pnpm install
 
 test_backend:
   stage: test

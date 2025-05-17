@@ -76,6 +76,19 @@ docker exec -it <backend-container-name> npx prisma migrate dev --name init
 
 ---
 
+## 🌱 Datenbank-Seeding (Beispieldaten einfügen)
+
+Nach den Migrationen kannst du einmalig Beispieldaten in die Datenbank einfügen.
+
+### **1. Seed-Skript im Docker-Container ausführen**
+
+Führe folgenden Befehl aus, um das Seed-Skript im laufenden Backend-Container auszuführen:
+
+```bash
+docker-compose exec backend npm run seed
+
+---
+
 ## 🔌 API-Routen
 
 ### 📍 Trips
@@ -122,8 +135,6 @@ curl http://localhost:3000/api/trips
 ---
 
 
----
-
 ## 🚀 Optional: Lokale Entwicklung ohne Docker
 
 ### **1. Backend starten**
@@ -133,7 +144,7 @@ curl http://localhost:3000/api/trips
    ```
 2. **Abhängigkeiten installieren:**
    ```bash
-   pnpm install
+   npm install -g pnpm
    ```
 3. **Prisma-Migrationen ausführen:**
    ```bash
@@ -141,7 +152,7 @@ curl http://localhost:3000/api/trips
    ```
 4. **Server starten:**
    ```bash
-   pnpm run dev
+   pnpm run start
    ```
 
 ### **2. Frontend starten**
@@ -151,7 +162,8 @@ curl http://localhost:3000/api/trips
    ```
 2. **Abhängigkeiten installieren:**
    ```bash
-   pnpm install
+   npm install -g pnpm
+   pnpm install --frozen-lockfile
    ```
 3. **Vite-Entwicklungsserver starten:**
    ```bash

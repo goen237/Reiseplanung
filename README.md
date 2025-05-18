@@ -49,6 +49,16 @@ FWE-SS-25-1123807/
 git clone <repository-url>
 cd FWE-SS-25-1123807
 ```
+/**
+ * Hinweis: Die Dateien `.env.example` im Root-, Backend- und Frontend-Verzeichnis dienen als Vorlage für die benötigten Umgebungsvariablen.
+ *
+ * **Wichtig:** Bevor der Docker-Container gestartet wird, müssen Sie für jedes Verzeichnis eine eigene `.env`-Datei erstellen und die erforderlichen Umgebungsvariablen mit Ihren individuellen Werten ausfüllen.
+ *
+ * Beispielvorgehen:
+ * 1. Kopieren Sie die jeweilige `.env.example`-Datei und benennen Sie sie in `.env` um.
+ * 2. Tragen Sie Ihre spezifischen Konfigurationswerte in die `.env`-Dateien ein.
+ * 3. Erst danach den Docker-Container starten.
+ */
 
 #### **2.1. Docker-Compose starten**
 ```bash
@@ -72,6 +82,14 @@ docker-compose up --build
 #### **2.3. Prisma-Migrationen ausführen**
 ```bash
 docker exec -it <backend-container-name> npx prisma migrate dev --name init
+
+### **Beispiel: Migration im Backend-Container ausführen**
+
+Angenommen, dein Backend-Container heißt `fwe-ss-25-1123807_backend_1`, führe folgenden Befehl aus:
+
+```bash
+docker exec -it fwe-ss-25-1123807_backend_1 npx prisma migrate dev --name init
+```
 ```
 
 ---
@@ -86,6 +104,7 @@ Führe folgenden Befehl aus, um das Seed-Skript im laufenden Backend-Container a
 
 ```bash
 docker-compose exec backend npm run seed
+```
 
 ---
 
@@ -124,6 +143,9 @@ docker-compose exec backend npm run seed
 ### **1. Tests ausführen**
 ```bash
 docker exec -it <backend-container-name> npm run test
+```
+```bash
+docker exec -it fwe-ss-25-1123807_backend_1 npm run test
 ```
 
 ### **2. Alternativ: API mit Postman oder cURL testen**

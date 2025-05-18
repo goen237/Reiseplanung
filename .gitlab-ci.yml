@@ -25,7 +25,9 @@ install_backend:
   script:
     - cd backend
     - npm install -g pnpm
+    - export PATH="$(pnpm bin):$PATH"
     - pnpm install --no-frozen-lockfile
+    - pnpm add -D prisma --silent
 
 install_frontend:
   stage: install

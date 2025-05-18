@@ -11,12 +11,15 @@ describe("Destination Service", () => {
         description: "Test Description",
         activities: ["Hiking", "Swimming"],
         photos: ["photo1.jpg", "photo2.jpg"],
+        latitude: 12.34,
+        longitude: 56.78,
       },
     });
     testDestinationId = destination.id;
   });
 
   afterAll(async () => {
+    await prisma.tripDestination.deleteMany();
     await prisma.destination.deleteMany();
   });
 

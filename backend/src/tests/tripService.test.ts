@@ -18,6 +18,7 @@ describe("Trip Service", () => {
   });
 
   afterAll(async () => {
+    await prisma.tripDestination.deleteMany();
     await prisma.trip.deleteMany();
   });
 

@@ -76,7 +76,7 @@ export default function TripsByDestination() {
           <h2 className="trips-title">Reisen zu diesem Reiseziel</h2>
           <div className="trips-grid">
             {trips.map((trip) => (
-              <TripCard key={trip.id} trip={trip} onDelete={() => {}} />
+              <TripCard key={trip.id} trip={trip} onDelete={() => {}} onArchive={() => {}} />
             ))}
           </div>
         </div>

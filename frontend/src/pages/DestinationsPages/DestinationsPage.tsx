@@ -46,6 +46,8 @@ export default function DestinationsPage() {
             key={destination.id}
             destination={destination}
             tripId="" // Kein spezifischer TripId erforderlich
+            tripStartDate=""
+            tripEndDate=""
             onDelete={handleDelete}
           />
         ))}

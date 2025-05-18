@@ -6,6 +6,8 @@ const tripSchema = z.object({
   description: z.string().optional(),
   activities: z.array(z.string()),
   photos: z.array(z.string()),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
 });
 
 export const getAllDestinations = () => {
@@ -21,6 +23,12 @@ export const getDestinationById = (id: number) => {
 
 export const createDestination = (data: any) => {
   const validatedData = tripSchema.parse(data); // Validierung der Eingabedaten
+  if (validatedData.latitude !== undefined) {
+    validatedData.latitude = parseFloat(validatedData.latitude as any);
+  }
+  if (validatedData.longitude !== undefined) {
+    validatedData.longitude = parseFloat(validatedData.longitude as any);
+  }
   return prisma.destination.create(
     {data: validatedData} // Erstellen des Reiseziels mit den validierten Daten
   );
@@ -39,9 +47,16 @@ export const searchDestinations = (name: string) => {
 };
 
 export const updateDestination = (id: number, data: any) => {
+  const validatedData = tripSchema.parse(data); // Validierung der Eingabedaten
+  if (validatedData.latitude !== undefined) {
+    validatedData.latitude = parseFloat(validatedData.latitude as any);
+  }
+  if (validatedData.longitude !== undefined) {
+    validatedData.longitude = parseFloat(validatedData.longitude as any);
+  }
   return prisma.destination.update({
     where: { id },
-    data,
+    data: validatedData,
   });
 };
 

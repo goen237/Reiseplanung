@@ -4,6 +4,8 @@ export interface Destination {
     description: string;
     activities: string[];
     photos: string[];
+    latitude: number;
+    longitude: number;
   }
 
   export interface Trip {
@@ -14,5 +16,6 @@ export interface Destination {
     startDate: string;
     endDate: string;
     participants: string[];
+    archived: boolean;
     destinations?: Destination[];
   }

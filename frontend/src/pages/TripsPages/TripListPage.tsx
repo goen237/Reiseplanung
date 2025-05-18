@@ -5,6 +5,14 @@ import TripCard from "../../components/TripCardComponent/TripCard";
 import { Trip } from "../../types/models";
 import "./TripListPage.css"; // Import der CSS-Datei
 
+const today = new Date();
+
+function getDaysUntil(dateString: string): number {
+  const tripDate = new Date(dateString);
+  const diffTime = tripDate.getTime() - today.getTime();
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
+
 export default function TripListPage() {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [searchName, setSearchName] = useState("");
@@ -36,11 +44,32 @@ export default function TripListPage() {
     }
   };
 
+  const handleArchive = (id: number, archived: boolean) => {
+    api
+      .patch(`/trips/${id}/archive`, { archived })
+      .then(() => fetchTrips())
+      .catch(() => alert("Fehler beim Archivieren der Reise!"));
+  };
+
+  // Trenne kommende, vergangene und archivierte Reisen
+  today.setHours(0, 0, 0, 0);
+
+  const kommendeReisen = trips.filter(trip => !trip.archived && new Date(trip.startDate) >= today);
+  const vergangeneReisen = trips.filter(trip => !trip.archived && new Date(trip.startDate) < today);
+  const archivierteReisen = trips.filter(trip => trip.archived);
+
+
+  // Reisen, die in den nächsten 7 Tagen starten
+  const upcomingTrips = trips.filter(
+    (trip) => {
+      const days = getDaysUntil(trip.startDate);
+      return days >= 0 && days <= 7;
+    }
+  );
+
   return (
     <div className="trip-list-container">
-      <h1 className="page-title">Alle Reisen</h1>
-
-      {/* Suchfelder */}
+            {/* Suchfelder */}
       <div className="search-container">
         <div className="search-box">
           <label htmlFor="searchName" className="search-label">
@@ -77,22 +106,71 @@ export default function TripListPage() {
         Neue Reise anlegen
       </button>
 
-      {/* Liste der Reisen */}
+      <h1 className="page-title">Alle Reisen</h1>
+      {/* Hinweis für bevorstehende Reisen */}
+      {upcomingTrips
+        .filter(trip => !trip.archived)
+        .map((trip) => {
+          const days = getDaysUntil(trip.startDate);
+          return (
+            <div key={trip.id} className="upcoming-trip-hint">
+              <span role="img" aria-label="rocket" className="rocket-emoji">🚀</span>
+              Deine Reise „{trip.name}“ startet in {days} Tag{days !== 1 && "en"}!
+            </div>
+          );
+        })
+      }
+      {/* Kommende Reisen */}
+      <h2 className="section-title">Kommende Reisen</h2>
       <div className="trip-list">
-        {trips.length === 0 ? (
-          <div className="no-trips-message">
-            Keine Reisen gefunden.
-          </div>
+        {kommendeReisen.length === 0 ? (
+          <div className="no-trips-message">Keine kommenden Reisen gefunden.</div>
         ) : (
-          trips.map((trip) => (
+          kommendeReisen.map((trip) => (
             <TripCard
               key={trip.id}
               trip={trip}
               onDelete={handleDelete}
+              onArchive={handleArchive}
+            />
+          ))
+        )}
+      </div>
+
+      {/* Vergangene Reisen */}
+      <h2 className="section-title">Vergangene Reisen</h2>
+      <div className="trip-list">
+        {vergangeneReisen.length === 0 ? (
+          <div className="no-trips-message">Keine vergangenen Reisen gefunden.</div>
+        ) : (
+          vergangeneReisen.map((trip) => (
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              onDelete={handleDelete}
+              onArchive={handleArchive}
+            />
+          ))
+        )}
+      </div>
+
+      {/* Archivierte Reisen */}
+      <h2 className="section-title">Archivierte Reisen</h2>
+      <div className="trip-list trip-list-archived">
+        {archivierteReisen.length === 0 ? (
+          <div className="no-trips-message">Keine archivierten Reisen gefunden.</div>
+        ) : (
+          archivierteReisen.map((trip) => (
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              onDelete={handleDelete}
+              onArchive={handleArchive}
             />
           ))
         )}
       </div>
     </div>
   );
+
 }

@@ -106,3 +106,10 @@ export const searchTrips = (name?: string, date?: string) => {
   return prisma.trip.findMany({ where });
 };
 
+export const archiveTrip = async (tripId: number, archived: boolean) => {
+  return prisma.trip.update({
+    where: { id: tripId },
+    data: { archived },
+  });
+}
+

@@ -12,7 +12,6 @@ export const getDestinationById = async (req: Request, res: Response): Promise<v
     res.status(400).json({ error: "Missing destination ID" });
     return;
   }
-  console.log("eingelesene ID", idParam)
 
   const id = parseInt(idParam);
   if(isNaN(id)) {

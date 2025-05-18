@@ -22,6 +22,7 @@ model Trip {
   startDate    DateTime
   endDate      DateTime
   participants String[]
+  archived     Boolean            @default(false)
   destinations TripDestination[]
 }
 
@@ -31,6 +32,8 @@ model Destination {
   description String?
   activities  String[]
   photos      String[]
+  latitude    Float?
+  longitude   Float?
   trips       TripDestination[]
 }
 

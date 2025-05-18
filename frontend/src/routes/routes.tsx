@@ -8,6 +8,7 @@ import TripDetailPage from "../pages/TripsPages/TripDetailPage";
 import TripEditPage from "../pages/TripsPages/TripEditPage";
 import TripListPage from "../pages/TripsPages/TripListPage";
 import TripsByDestination from "../pages/TripsPages/TripsByDestination";
+import EditDestinationPage from "../pages/DestinationsPages/EditDestinationPage";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,10 @@ const router = createBrowserRouter([
       { path: "/trips/:id/edit", element: <TripEditPage /> },
       { path: "/trips/by/destination", element: <TripsByDestination /> },
       { path: "/trips/:id/destinations/new", element: <AddDestinationPage /> },
-      { path: "/trips/:id/destinations/:destinationId/edit", element: <AddDestinationPage />},
+      { path: "/trips/:id/destinations/:destinationId/edit", element: <EditDestinationPage />},
       { path: "/destinations", element: <DestinationsPage /> },
       { path: "/destinations/new", element: <AddDestinationPage /> },
+      { path: "/destinations/:id/edit", element: <EditDestinationPage /> },
       { path: "*", element: <NotFound />},
     ],
   },

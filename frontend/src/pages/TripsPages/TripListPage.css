@@ -1,6 +1,6 @@
 .trip-list-container {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
 }
@@ -76,7 +76,65 @@
 }
 
 .trip-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0.5rem 0px;
+}
+
+.upcoming-trip-hint {
+  background: #e3fcec;
+  border: 1px solid #34d399;
+  color: #065f46;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rocket-emoji {
+  font-size: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+  .trip-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .trip-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .trip-list-container {
+    padding: 1rem;
+  }
+  .search-input {
+    width: 100%;
+    min-width: 0;
+  }
+  .page-title {
+    font-size: 1.4rem;
+  }
+}
+
+/* Optional: Buttons und Suchfelder auf kleinen Bildschirmen anpassen */
+@media (max-width: 500px) {
+  .search-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .search-input,
+  .search-button,
+  .new-trip-button {
+    width: 100%;
+    font-size: 0.98rem;
+  }
 }

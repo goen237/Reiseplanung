@@ -45,8 +45,15 @@ export default function AddDestinationPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]:
+        name === "latitude" || name === "longitude"
+          ? value === "" ? undefined : Number.parseFloat(value)
+          : value,
+    }));
   };
+
 
   const handleArrayChange = (e: React.ChangeEvent<HTMLInputElement>, field: "activities" | "photos") => {
     const { value } = e.target;
@@ -75,6 +82,8 @@ export default function AddDestinationPage() {
           description: form.description,
           activities: form.activities?.map((a) => a.trim()).filter((a) => a !== ""),
           photos: form.photos?.map((p) => p.trim()).filter((p) => p !== ""),
+          latitude: form.latitude,
+          longitude: form.longitude,
         };
 
         await api.post(`/destinations/`, destinationData);
@@ -115,53 +124,62 @@ export default function AddDestinationPage() {
   };
 
   return (
-    <div className="container">
-      <h3>{isEdit ? "Reiseziel bearbeiten" : isTrip ? "Neues Reiseziel anlegen" : "Reiseziel speichern"}</h3>
+    <div className="add-destination-container">
+      <h2 className="add-destination-title">
+        {isEdit ? "Reiseziel bearbeiten" : isTrip ? "Neues Reiseziel zur Reise hinzufügen" : "Reiseziel speichern"}
+      </h2>
 
       <form onSubmit={handleSubmit} className="destination-form">
-      {isTrip && (
-        <>
-        <br />
-        <h4>Alle verfügbaren Reiseziele</h4>
-        <div className="destination-cards">
-          {allDestinations.map((destination) => (
-          <div
-            key={destination.id}
-            className={`destination-card ${
-            selectedDestinationIds.includes(destination.id) ? "selected" : ""
-            }`}
-            onClick={() => handleDestinationSelection(destination.id)}
-          >
-            {destination.photos?.[0] && (
-            <img src={destination.photos[0]} alt={destination.name} />
+        {isTrip && (
+          <>
+            <h4 className="destination-list-title">Alle verfügbaren Reiseziele</h4>
+            <div className="destination-cards">
+              {allDestinations.map((destination) => (
+                <div
+                  key={destination.id}
+                  className={`destination-card${selectedDestinationIds.includes(destination.id) ? " selected" : ""}`}
+                  onClick={() => handleDestinationSelection(destination.id)}
+                  title={destination.description}
+                >
+                  {destination.photos?.[0] && (
+                    <img src={destination.photos[0]} alt={destination.name} />
+                  )}
+                  <p>{destination.name}</p>
+                  {destination.activities && destination.activities.length > 0 && (
+                    <div className="destination-card-activities">
+                      {destination.activities.map((act, idx) => (
+                        <span className="destination-activity-badge" key={idx}>
+                          {act}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <label className="checkbox-container">
+              <input
+                type="checkbox"
+                checked={includeNewDestination}
+                onChange={(e) => setIncludeNewDestination(e.target.checked)}
+                className="checkbox-input"
+              />
+              <span className="checkbox-custom"></span>
+              Neues Reiseziel anlegen
+            </label>
+            {includeNewDestination && (
+              <DestinationForm form={form} onChange={handleChange} onArrayChange={handleArrayChange} />
             )}
-            <p>{destination.name}</p>
-          </div>
-          ))}
-        </div>
-        <br />
-        <label className="checkbox-container">
-          <input
-          type="checkbox"
-          checked={includeNewDestination}
-          onChange={(e) => setIncludeNewDestination(e.target.checked)}
-          className="checkbox-input"
-          />
-          <span className="checkbox-custom"></span>
-          Neues Reiseziel speichern
-        </label>
-        <br />
-        {includeNewDestination && (
+          </>
+        )}
+        {!isTrip && (
           <DestinationForm form={form} onChange={handleChange} onArrayChange={handleArrayChange} />
         )}
-        </>
-      )}
-      {!isTrip && (
-        <DestinationForm form={form} onChange={handleChange} onArrayChange={handleArrayChange} />
-      )}
-      <br />
-      <button type="submit">{isEdit ? "Speichern" : "Anlegen"}</button>
+        <button type="submit" className="destination-submit-btn">
+          {isEdit ? "Speichern" : "Anlegen"}
+        </button>
       </form>
     </div>
   );
 }
+

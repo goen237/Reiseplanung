@@ -1,95 +1,183 @@
 .trip-card {
   border: none;
-  border-radius: 12px;
-  padding: 16px;
-  width: 320px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 18px;
+  padding: 20px 18px 16px 18px;
+  width: 340px;
+  background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%);
+  box-shadow: 0 6px 18px rgba(0, 120, 212, 0.08), 0 1.5px 4px rgba(0,0,0,0.04);
+  transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  margin-bottom: 24px;
 }
 
 .trip-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(0, 120, 212, 0.13), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.trip-image {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.trip-card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
 }
 
 .trip-card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-  color: #333;
-  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin: 0;
+  flex: 1;
 }
 
-.trip-card p {
+.trip-dates {
+  font-size: 0.98rem;
+  color: #374151;
+  margin-bottom: 8px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.trip-description {
   font-size: 1rem;
-  margin-bottom: 12px;
-  color: #555;
+  color: #4b5563;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.trip-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.trip-card-hint {
+  margin-bottom: 0.7rem;
+  background: #fffbe6;
+  border: 1.5px solid #ffd700;
+  color: #b8860b;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 4px #ffe06644;
 }
 
-.trip-card .trip-dates {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 16px;
-  text-align: center;
+.rocket-emoji {
+  font-size: 1.3rem;
 }
 
-.trip-card .trip-actions {
+.trip-countdown {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0078d4;
+  background: #e3f2fd;
+  border-radius: 6px;
+  padding: 2px 10px;
+  margin-left: 8px;
+}
+
+.trip-card-upcoming {
+  border: 2px solid #ffd700;
+  background: linear-gradient(135deg, #fffbe6 70%, #e0e7ff 100%);
+  box-shadow: 0 0 16px #ffe06655;
+}
+
+.trip-card-archived {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+  position: relative;
+}
+
+.archived-label {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: #ffc107;
+  color: #333;
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 1px 4px #ffc10744;
+}
+
+.trip-actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: auto;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
 }
 
-.trip-card button {
-  padding: 10px 16px;
+.action-btn {
+  padding: 9px 15px;
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 7px;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  box-shadow: 0 1px 3px #0001;
 }
 
-.trip-card button:active {
-  transform: scale(0.95);
+.action-btn-primary {
+  background: #0078d4;
+  color: #fff;
+}
+.action-btn-primary:hover {
+  background: #005a9e;
 }
 
-.trip-card button.details {
-  background-color: #0078d4;
-  color: white;
+.action-btn-edit {
+  background: #ffd700;
+  color: #333;
+}
+.action-btn-edit:hover {
+  background: #ffe066;
+  color: #1a237e;
 }
 
-.trip-card button.details:hover {
-  background-color: #005a9e;
+.action-btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+.action-btn-delete:hover {
+  background: #b71c1c;
 }
 
-.trip-card button.edit {
-  background-color: #ffc107;
-  color: white;
+.action-btn-archive {
+  background: #f5f5f5;
+  color: #b8860b;
+  border: 1.5px solid #ffd700;
+}
+.action-btn-archive:hover {
+  background: #fffbe6;
+  color: #b8860b;
 }
 
-.trip-card button.edit:hover {
-  background-color: #e0a800;
+.action-btn-restore {
+  background: #e3fcec;
+  color: #065f46;
+  border: 1.5px solid #34d399;
 }
-
-.trip-card button.delete {
-  background-color: #dc3545;
-  color: white;
-}
-
-.trip-card button.delete:hover {
-  background-color: #c82333;
+.action-btn-restore:hover {
+  background: #b9f6ca;
+  color: #065f46;
 }

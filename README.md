@@ -198,3 +198,55 @@ curl http://localhost:3000/api/trips
 - **Umgebungsvariablen**:
   - Stelle sicher, dass die `.env`-Dateien korrekt konfiguriert sind.
 
+---
+
+**Freestyle task #1**
+
+## 🚀 Dashboard-Feature: Hinweis auf bevorstehende Reisen
+
+Auf der Startseite (Dashboard) wird für jede Reise, deren Startdatum innerhalb der nächsten 7 Tage liegt, ein besonderer Hinweis angezeigt:
+
+> 🚀 Deine Reise „Europa-Tour“ startet in 3 Tagen!
+
+So werden Nutzer:innen rechtzeitig an anstehende Reisen erinnert.
+Das Feature erkennt automatisch alle Reisen, die in den nächsten 7 Tagen beginnen, und hebt sie prominent hervor.
+
+---
+
+## 🗂️ Feature: Reisen archivieren
+
+Du kannst Reisen manuell archivieren, um sie aus der Übersicht der aktiven Reisen auszublenden.
+Archivierte Reisen werden in einem eigenen Bereich angezeigt und können jederzeit wiederhergestellt werden.
+
+**Wie funktioniert das?**
+- Jede Reise-Karte besitzt einen Button „Archivieren“.
+- Nach dem Archivieren erscheint die Reise im Bereich „Archivierte Reisen“.
+- Archivierte Reisen können über den Button „Wiederherstellen“ zurück in die aktive Übersicht verschoben werden.
+- So behältst du den Überblick über vergangene, geplante und archivierte Reisen.
+
+**Technische Umsetzung:**
+- Das Feld `archived` im Datenmodell kennzeichnet archivierte Reisen.
+- Die Archivierung wird direkt in der Datenbank gespeichert und ist somit persistent.
+
+---
+
+**Freestyle task #2**
+
+## 🌦️ Wettervorhersage für Reiseziele (Open-Meteo API)
+
+Für jedes Reiseziel wird im Detailbereich die Wettervorhersage für den Zeitraum der jeweiligen Reise angezeigt.
+Die Wetterdaten (z. B. Tageshöchst- und -tiefsttemperatur, Wettersymbole) werden automatisch über die kostenlose [Open-Meteo API](https://open-meteo.com/) anhand der Koordinaten des Reiseziels und des geplanten Reisezeitraums abgerufen.
+
+**Vorteile für Nutzer:innen:**
+- Die Wettervorhersage ist direkt bei jedem Reiseziel sichtbar.
+- Die Anzeige ist immer auf den Zeitraum der jeweiligen Reise abgestimmt.
+- So kann die Reiseplanung und das Packen optimal vorbereitet werden.
+
+**Technische Umsetzung:**
+- Das Feature nutzt die Open-Meteo-API (ohne API-Key).
+- Die Koordinaten (`latitude`, `longitude`) werden im Datenmodell für jedes Reiseziel gespeichert.
+- Die Wetterdaten werden im Frontend dynamisch für den Zeitraum der aktuellen Reise geladen und angezeigt.
+
+**Beispielanzeige:**
+
+🌦️ Wettervorhersage 01.06.2025: ☀️ 23°C / 13°C 02.06.2025: 🌤️ 21°C / 12°C 03.06.2025: 🌧️ 18°C / 11°C ...

@@ -51,6 +51,11 @@ describe("Trip Service", () => {
     expect(updatedTrip.name).toBe("Updated Trip");
   });
 
+  it("should archive a trip", async () => {
+    const archivedTrip = await tripService.archiveTrip(testTripId, true);
+    expect(archivedTrip.archived).toBe(true);
+  });
+
   it("should delete a trip", async () => {
     await tripService.deleteTrip(testTripId);
     const trip = await tripService.getTripById(testTripId);

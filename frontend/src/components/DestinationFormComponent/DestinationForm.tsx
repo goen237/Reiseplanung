@@ -3,10 +3,10 @@ import "./DestinationForm.css";
 interface Destination {
   name?: string;
   description?: string;
-  // startDate?: string;
-  // endDate?: string;
   activities?: string[];
   photos?: string[];
+  latitude?: number;
+  longitude?: number;
 }
 
 interface DestinationFormProps {
@@ -49,6 +49,22 @@ export default function DestinationForm({ form, onChange, onArrayChange }: Desti
           name="photos"
           value={form.photos?.join(", ") || ""}
           onChange={(e) => onArrayChange(e, "photos")}
+        />
+      </label>
+      <label>
+        Breitengrad: <input
+          name="latitude"
+          type="number"
+          value={form.latitude || ""}
+          onChange={onChange}
+        />
+      </label>
+      <label>
+        Längengrad: <input
+          name="longitude"
+          type="number"
+          value={form.longitude || ""}
+          onChange={onChange}
         />
       </label>
     </div>

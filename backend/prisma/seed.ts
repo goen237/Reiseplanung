@@ -76,7 +76,10 @@ async function main() {
         photos: [
           "https://tse3.mm.bing.net/th/id/OIP.nnb8DfOgdM8twfTbhdYXZgHaE8?w=299&h=200&c=7&r=0&o=5&pid=1.7",
           "https://tse2.mm.bing.net/th/id/OIP.MeDVoqgi1hZfmZz3UwVDOwHaE8?w=253&h=180&c=7&r=0&o=5&pid=1.7"
-        ]
+        ],
+        latitude: 41.9028,
+        longitude: 12.4964
+
       },
       {
         name: "Tokio",
@@ -85,7 +88,9 @@ async function main() {
         photos: [
           "https://image.freepik.com/free-photo/shibuya-crossing-from-top-view-night-tokyo-japan_255553-674.jpg?w=1800",
           "https://i.pinimg.com/originals/bc/12/a8/bc12a843cecc82de226aacacde2f79c0.jpg"
-        ]
+        ],
+        latitude: 35.682839,
+        longitude: 139.759455
       },
       {
         name: "Sydney",
@@ -94,7 +99,9 @@ async function main() {
         photos: [
           "https://www.thoughtco.com/thmb/hssf0x9k0wghn0zwi5LT9x9TQc4=/2000x1340/filters:fill(auto,1)/utzonSOH-821907-56aadd173df78cf772b49827.jpg",
           "https://th.bing.com/th/id/R.086967ab6350141eebd751777a01dd7e?rik=ST5BuLtdD1cWnw&pid=ImgRaw&r=0"
-        ]
+        ],
+        latitude: -33.86785,
+        longitude: 151.20732
       },
       {
         name: "Kapstadt",
@@ -103,7 +110,9 @@ async function main() {
         photos: [
           "https://image.geo.de/30080722/t/Gu/v4/w960/r0/-/naturphaenomene-gross-07-jpg--38372-.jpg",
           "https://th.bing.com/th/id/R.0487790a0f4224aacae3a57648fc6b2f?rik=VfBBp8DAvfXZaQ&pid=ImgRaw&r=0"
-        ]
+        ],
+        latitude: -33.9249,
+        longitude: 18.4241
       },
       {
         name: "Rio de Janeiro",
@@ -112,7 +121,9 @@ async function main() {
         photos: [
           "https://th.bing.com/th/id/OIP.vwOHe25XxL-HSSgqXP4EVwHaEK?r=0&rs=1&pid=ImgDetMain",
           "https://th.bing.com/th/id/OIP.QeuOekeBfqCUcobhZry_HQHaE7?r=0&rs=1&pid=ImgDetMain"
-        ]
+        ],
+        latitude: -22.9068,
+        longitude: -43.1729
       },
       {
         name: "Kairo",
@@ -121,7 +132,9 @@ async function main() {
         photos: [
           "https://th.bing.com/th/id/OIP.ILG8pD65iiguEQMV0Y-xhAHaEA?r=0&rs=1&pid=ImgDetMain",
           "https://th.bing.com/th/id/OIP.WrAJKiyLAZjk3JZaHXMfPwHaE8?r=0&rs=1&pid=ImgDetMain"
-        ]
+        ],
+        latitude: 30.0444,
+        longitude: 31.2357
       },
       {
         name: "Barcelona",
@@ -130,7 +143,9 @@ async function main() {
         photos: [
           "https://th.bing.com/th/id/OIP.Awr5hDY2YVG1xIuxN-vloAHaF-?r=0&rs=1&pid=ImgDetMain",
           "https://th.bing.com/th/id/R.ec09a0926e0b6004c7b13ecc52b141ca?rik=jrlnPPj94hyyuw&pid=ImgRaw&r=0"
-        ]
+        ],
+        latitude: 41.3851,
+        longitude: 2.1734
       },
       {
         name: "Bangkok",
@@ -139,7 +154,9 @@ async function main() {
         photos: [
           "https://th.bing.com/th/id/OIP._ulJ92IVBs8JSYhgpsLObgHaE8?r=0&rs=1&pid=ImgDetMain",
           "https://www.thishomemadelife.com/wp-content/uploads/2019/11/shu-Taiwan-Taipei-Market-Stall-1176689317-1440x823.jpg"
-        ]
+        ],
+        latitude: 13.7563,
+        longitude: 100.5018
       }
     ]
   });
@@ -150,17 +167,19 @@ async function main() {
         name: "Asien-Abenteuer",
         description: "Eine Reise durch die faszinierendsten Städte Asiens",
         image: "https://th.bing.com/th/id/R.df4606d65493675d5a85503e7cbcd895?rik=z9v0WDsANMQmIA&pid=ImgRaw&r=0",
-        startDate: new Date("2025-08-01"),
-        endDate: new Date("2025-08-20"),
-        participants: ["Eve", "Frank"]
+        startDate: new Date("2024-08-01"),
+        endDate: new Date("2024-08-20"),
+        participants: ["Eve", "Frank"],
+        archived: true
       },
       {
         name: "Afrika-Entdeckung",
         description: "Safari und Kultur in Afrika erleben",
         image: "https://th.bing.com/th/id/OIP.v7BJBjUORWqlcI33BeH3dgHaE8?r=0&rs=1&pid=ImgDetMain",
-        startDate: new Date("2025-09-10"),
-        endDate: new Date("2025-09-25"),
-        participants: ["Grace", "Heidi"]
+        startDate: new Date("2025-01-10"),
+        endDate: new Date("2025-01-25"),
+        participants: ["Grace", "Heidi"],
+        archived: false
       },
       {
         name: "Australien-Rundreise",
@@ -168,15 +187,17 @@ async function main() {
         image: "https://th.bing.com/th/id/OIP.DeBY8-DJnHo-wlNGYa9DPwHaFS?w=278&h=199&c=7&r=0&o=5&pid=1.7",
         startDate: new Date("2025-10-05"),
         endDate: new Date("2025-10-25"),
-        participants: ["Ivan", "Judy"]
+        participants: ["Ivan", "Judy"],
+        archived: false
       },
       {
         name: "Südamerika-Highlights",
         description: "Von Rio bis zu den Anden",
         image: "https://www.reise.de/wp-content/uploads/sites/16/Machu-Picchu-960x550-center-center.jpg",
-        startDate: new Date("2025-11-01"),
-        endDate: new Date("2025-11-18"),
-        participants: ["Karl", "Lena"]
+        startDate: new Date("2025-05-20"),
+        endDate: new Date("2025-05-31"),
+        participants: ["Karl", "Lena"],
+        archived: false
       },
       {
         name: "Mittelmeer-Kreuzfahrt",
@@ -184,7 +205,8 @@ async function main() {
         image: "https://th.bing.com/th/id/R.23b6018ec8a740dc3a10151337b27996?rik=zuHvn4IPKOP7XQ&pid=ImgRaw&r=0",
         startDate: new Date("2025-12-01"),
         endDate: new Date("2025-12-10"),
-        participants: ["Mona", "Nico"]
+        participants: ["Mona", "Nico"],
+        archived: false
       }
     ]
   });

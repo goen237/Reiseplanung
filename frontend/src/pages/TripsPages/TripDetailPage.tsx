@@ -4,6 +4,7 @@ import { api } from "../../api/client";
 import DestinationList from "../../components/TripDetailComponent/DestinationList";
 import TripDetails from "../../components/TripDetailComponent/TripDetails";
 import { Destination, Trip } from "../../types/models";
+import "./TripDetailPage.css";
 
 export default function TripDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +31,7 @@ export default function TripDetailPage() {
       .catch((err) => console.error("Fehler beim Laden der Reiseziele:", err));
   }, [id]);
 
-  if (!trip) return <div>Reise wird geladen...</div>;
+  if (!trip) return <div className="trip-details-loading">Reise wird geladen...</div>;
 
   const handleDeleteDestination = (destinationId: number) => {
     if (!id) return;
@@ -46,11 +47,12 @@ export default function TripDetailPage() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
+    <div className="trip-detailpage-container">
       <button
         onClick={() => navigate("/")}
-        className="bg-gray-300 text-black px-4 py-2 rounded mb-4"
+        className="trip-detailpage-backbtn"
       >
+        <i className="fa fa-arrow-left" aria-hidden="true" style={{ marginRight: 6 }} />
         Zurück zur Übersicht
       </button>
 
@@ -59,11 +61,13 @@ export default function TripDetailPage() {
         onEdit={() => navigate(`/trips/${id}/edit`)}
       />
 
-      <hr className="my-6" />
+      <hr className="trip-detailpage-divider" />
 
       <DestinationList
         destinations={destinations}
         tripId={id!}
+        tripStartDate={trip.startDate}
+        tripEndDate={trip.endDate}
         onAdd={() => navigate(`/trips/${id}/destinations/new`)}
         onDelete={handleDeleteDestination}
       />

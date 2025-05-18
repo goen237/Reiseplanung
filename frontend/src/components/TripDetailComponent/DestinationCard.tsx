@@ -1,23 +1,39 @@
 import { useNavigate } from "react-router-dom";
 import { Destination } from "../../types/models";
-import "./DestinationCard.css"; // Import der CSS-Datei
+import WeatherForecastWidget from "./WeatherForecastWidget";
+import "./DestinationCard.css";
 
 interface DestinationCardProps {
   destination: Destination;
   tripId: string;
   onDelete: (id: number) => void;
+  tripStartDate: string;
+  tripEndDate: string;
 }
-
 export default function DestinationCard({
   destination,
   tripId,
   onDelete,
+  tripStartDate,
+  tripEndDate,
 }: DestinationCardProps) {
   const navigate = useNavigate();
+
 
   return (
     <div className="destination-card">
       <h2>{destination.name}</h2>
+      {destination.latitude &&
+        destination.longitude &&
+        !!tripStartDate &&
+        !!tripEndDate && (
+          <WeatherForecastWidget
+            latitude={destination.latitude}
+            longitude={destination.longitude}
+            startDate={tripStartDate}
+            endDate={tripEndDate}
+          />
+      )}
       <p>{destination.description || "Keine Beschreibung verfügbar."}</p>
 
       {destination.photos?.length > 0 && (
@@ -33,18 +49,25 @@ export default function DestinationCard({
       )}
 
       {destination.activities?.length > 0 && (
-        <div className="destination-activities">
-          <h4>Aktivitäten:</h4>
-          <ul>
-            {destination.activities.map((activity, idx) => (
-              <li key={idx}>{activity}</li>
-            ))}
-          </ul>
+        <div className="destination-activities-badges">
+          {destination.activities.map((activity, idx) => (
+            <span className="destination-activity-badge" key={idx}>
+              {activity}
+            </span>
+          ))}
         </div>
       )}
 
       <div className="destination-actions">
-        <button onClick={() => navigate(`/trips/${tripId}/destinations/${destination.id}/edit`)}>
+        <button
+          onClick={() =>
+            navigate(
+              tripId
+          ? `/trips/${tripId}/destinations/${destination.id}/edit`
+          : `/destinations/${destination.id}/edit`
+            )
+          }
+        >
           Ziel bearbeiten
         </button>
         <button onClick={() => onDelete(destination.id)}>

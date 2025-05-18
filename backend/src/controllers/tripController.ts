@@ -72,3 +72,14 @@ export const searchTrips = async (req: Request, res: Response) => {
   const results = await tripService.searchTrips(req.query.name as string, req.query.date as string);
   res.json(results);
 }
+
+export const archiveTrip = async (req: Request, res: Response) => {
+  const tripId = parseInt(req.params.id);
+  const { archived } = req.body; // erwartet: { archived: true/false }
+  try {
+    const updatedTrip = await tripService.archiveTrip(tripId, archived);
+    res.json(updatedTrip);
+  } catch (error) {
+    res.status(500).json({ error: "Konnte Reise nicht archivieren." });
+  }
+};

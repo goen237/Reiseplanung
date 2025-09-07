@@ -1,4 +1,4 @@
-name: CI
+name: CI Pipeline
 
 on:
   push:
@@ -15,9 +15,10 @@ env:
 
 jobs:
   install_backend:
+    name: Install Backend
     runs-on: ubuntu-latest
     services:
-      db:
+      postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -26,41 +27,45 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U $POSTGRES_USER"
+          --health-cmd="pg_isready"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Install backend dependencies
-        run: pnpm install --no-frozen-lockfile
-        working-directory: backend
+          node-version: 'latest'
+          cache: 'npm'
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm install -g pnpm
+          pnpm install --no-frozen-lockfile
 
   install_frontend:
+    name: Install Frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Install frontend dependencies
-        run: pnpm install
-        working-directory: frontend
+          node-version: 'latest'
+          cache: 'npm'
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install -g pnpm
+          pnpm install
 
   test_backend:
+    name: Test Backend
     runs-on: ubuntu-latest
     needs: [install_backend]
     services:
-      db:
+      postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -69,27 +74,20 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U $POSTGRES_USER"
+          --health-cmd="pg_isready"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Install backend dependencies
-        run: pnpm install --no-frozen-lockfile
-        working-directory: backend
-      - name: Prisma generate
-        run: npx prisma generate
-        working-directory: backend
-      - name: Prisma migrate
-        run: npx prisma migrate dev --name init
-        working-directory: backend
-      - name: Run backend tests
-        run: npm run test
-        working-directory: backend
+          node-version: 'latest'
+          cache: 'npm'
+      - name: Run Backend Tests
+        run: |
+          cd backend
+          npx prisma generate
+          npx prisma migrate dev --name init
+          npm run test
